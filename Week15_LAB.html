@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dice Roller</title>
+</head>
+<body>
+    <form id="diceForm">
+        <input id="rollButton" type="button" value="Roll Dice">
+    </form>
+    <img id="die1" src="die1.png" alt="blank image">
+    <img id="die2" src="die1.png" alt="blank image">
+    <img id="die3" src="die1.png" alt="blank image">
+    <img id="die4" src="die1.png" alt="blank image">
+    <img id="die5" src="die1.png" alt="blank image">
+    <img id="die6" src="die1.png" alt="blank image">
+    <br>
+    <img id="die7" src="die1.png" alt="blank image">
+    <img id="die8" src="die1.png" alt="blank image">
+    <img id="die9" src="die1.png" alt="blank image">
+    <img id="die10" src="die1.png" alt="blank image">
+    <img id="die11" src="die1.png" alt="blank image">
+    <img id="die12" src="die1.png" alt="blank image">
+
+    <div id="frequencyTable"></div>
+
+    <script>
+        var dieImages = [];
+        var rollButton = document.getElementById("rollButton");
+        rollButton.addEventListener("click", rollDice);
+
+        // Initialize die images and count for each number
+        for (var i = 1; i <= 12; i++) {
+            dieImages.push(document.getElementById("die" + i));
+        }
+
+        function rollDice() {
+            var frequencyTable = {};
+
+            // Roll each die
+            for (var i = 0; i < dieImages.length; i++) {
+                var result = Math.floor(Math.random() * 6) + 1;
+                dieImages[i].src = "die" + result + ".png";
+
+                // Update frequency table
+                if (frequencyTable[result]) {
+                    frequencyTable[result]++;
+                } else {
+                    frequencyTable[result] = 1;
+                }
+            }
+
+            // Display frequency table on the website
+            displayFrequencyTable(frequencyTable);
+        }
+
+        function displayFrequencyTable(table) {
+            var frequencyTableDiv = document.getElementById("frequencyTable");
+            frequencyTableDiv.innerHTML = "<h2>Frequency Table</h2>";
+
+            var totalRolls = dieImages.length; // Total number of dice rolls
+
+            for (var number in table) {
+                var percentage = (table[number] / totalRolls) * 100;
+                frequencyTableDiv.innerHTML += "<p>Number " + number + ": " + percentage.toFixed(2) + "%</p>";
+            }
+        }
+    </script>
+</body>
+</html>
